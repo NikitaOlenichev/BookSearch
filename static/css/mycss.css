@@ -6,9 +6,35 @@ div.carousel {
     margin: 0.5rem;
 }
 
+div.form {
+    width: 700px;
+    text-align: left;
+    font-size: 18pt;
+}
+
+div.div {
+    margin-top: 20px;
+}
 
 
-table.top {
+a.button {
+    text-decoration: none;
+}
+
+a.main {
+    margin-left: 20px;
+}
 
 
+.text {
+    font-size: 18pt;
+}
+
+
+table td {
+  width: 50%;
+}
+
+.lab {
+    margin-top: 10px;
 }
