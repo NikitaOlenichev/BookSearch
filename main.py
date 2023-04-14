@@ -1,3 +1,5 @@
+from data import db_session
+
 from flask import Flask, render_template, redirect
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
@@ -33,4 +35,5 @@ def register():
 
 
 if __name__ == '__main__':
+    db_session.global_init("db/books.db")
     app.run(port=5000, host='127.0.0.1')
