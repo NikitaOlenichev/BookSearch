@@ -25,9 +25,16 @@ a.main {
     margin-left: 20px;
 }
 
+.navbar-toggler{
+    max-height: 45px;
+}
 
 .text {
     font-size: 18pt;
+}
+
+.login {
+    font-size: 15pt;
 }
 
 
@@ -37,4 +44,76 @@ table td {
 
 .lab {
     margin-top: 10px;
+}
+
+table.top {
+    margin: 20px;
+    width: 200px;
+}
+
+table.top0{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.menu {
+  display: flex;
+}
+
+.menu-login{
+    margin: 20px;
+}
+
+.nav-tabs {
+    margin-right: 100px;
+}
+
+div.page {
+    position: absolute;
+}
+
+nav {
+    position: absolute;
+}
+
+.navbar {
+
+    align: center;
+    z-index: 1;
+    background-color: white;
+    min-width: 800px;
+
+}
+
+.div-nav {
+    margin-left: 100px;
+    margin-right: 100px;
+
+}
+
+
+.nav-item {
+    float: left;
+    margin: 10px 50px 0px 0px;
+
+
+}
+
+
+.collapse {
+    margin: 0 auto;
+    font-size: 15pt;
+}
+
+.collapsing {
+    margin: 0 auto;
+    font-size: 15pt;
+}
+
+.page {
+    padding-top: 100px;
+}
+
+.form{
+    margin: 100px;
 }

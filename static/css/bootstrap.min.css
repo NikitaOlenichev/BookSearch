@@ -3694,7 +3694,7 @@ textarea.form-control-lg {
   --bs-nav-tabs-link-active-color: #333;
   --bs-nav-tabs-link-active-bg: #fff;
   --bs-nav-tabs-link-active-border-color: #333;
-  border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+
 }
 .nav-tabs .nav-link {
   margin-bottom: calc(-1 * var(--bs-nav-tabs-border-width));
@@ -3749,6 +3749,7 @@ textarea.form-control-lg {
 .nav-fill .nav-item {
   flex: 1 1 auto;
   text-align: center;
+  display: inline;
 }
 
 .nav-justified > .nav-link,
