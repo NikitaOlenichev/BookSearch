@@ -12,3 +12,4 @@ class Book(SqlAlchemyBase):
     author_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('authors.id'))
     genre = orm.relationship('Genre')
     author = orm.relationship('Author')
+    info = sqlalchemy.Column(sqlalchemy.String)
