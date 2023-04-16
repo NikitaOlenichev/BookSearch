@@ -1,5 +1,11 @@
+html {
+    font-size: 14px;
+}
+
+
 h2.title {
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
+    font-size: 2rem;
 }
 
 div.carousel {
@@ -7,13 +13,13 @@ div.carousel {
 }
 
 div.form {
-    width: 700px;
+    width: 30rem;
     text-align: left;
-    font-size: 18pt;
+    font-size: 2rem;
 }
 
 div.div {
-    margin-top: 20px;
+    margin-top: 2rem;
 }
 
 
@@ -22,7 +28,7 @@ a.button {
 }
 
 a.main {
-    margin-left: 20px;
+    margin-left: 2rem;
 }
 
 .navbar-toggler{
@@ -30,11 +36,11 @@ a.main {
 }
 
 .text {
-    font-size: 18pt;
+    font-size: 1rem;
 }
 
 .login {
-    font-size: 15pt;
+    font-size: 1.5rem;
 }
 
 
@@ -47,14 +53,10 @@ table td {
 }
 
 table.top {
-    margin: 20px;
     width: 200px;
 }
 
-table.top0{
-    margin-left: 100px;
-    margin-right: 100px;
-}
+
 
 .menu {
   display: flex;
@@ -65,11 +67,7 @@ table.top0{
 }
 
 .nav-tabs {
-    margin-right: 100px;
-}
-
-div.page {
-    position: absolute;
+    margin-right: 50px;
 }
 
 nav {
@@ -77,20 +75,14 @@ nav {
 }
 
 .navbar {
-
-    align: center;
+    position: fixed;
     z-index: 1;
     background-color: white;
-    min-width: 800px;
+    min-width: 100%;
+
+
 
 }
-
-.div-nav {
-    margin-left: 100px;
-    margin-right: 100px;
-
-}
-
 
 .nav-item {
     float: left;
@@ -102,18 +94,31 @@ nav {
 
 .collapse {
     margin: 0 auto;
-    font-size: 15pt;
+    font-size: 1.5rem;
 }
 
 .collapsing {
     margin: 0 auto;
-    font-size: 15pt;
+    font-size: 1.5rem;
 }
 
 .page {
-    padding-top: 100px;
+    padding-top: 9rem;
+    margin: 0 auto;
+    max-width: 1000px;
+    background-color: white;
+
+.content {
+    margin: 0 5rem;
 }
 
-.form{
+}
+
+.form {
     margin: 100px;
+}
+
+body {
+    overflow-x: scroll;
+    background-color: gray;
 }
