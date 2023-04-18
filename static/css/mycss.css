@@ -12,14 +12,23 @@ div.carousel {
     margin: 0.5rem;
 }
 
-div.form {
-    width: 30rem;
-    text-align: left;
-    font-size: 2rem;
+
+.login-page {
+
+
 }
 
-div.div {
-    margin-top: 2rem;
+.form {
+    background-color: white;
+    width: 50rem;
+    text-align: left;
+    font-size: 2rem;
+    margin: 12rem auto;
+    padding: 5rem;
+}
+
+.form h1{
+    text-align: center;
 }
 
 
@@ -73,25 +82,22 @@ table.top {
     margin-right: 50px;
 }
 
-nav {
-    position: absolute;
-}
+
 
 .navbar {
-    position: fixed;
-    z-index: 1;
-    background-color: white;
-    min-width: 100%;
-
-
-
+     background-color: white;
 }
 
 .nav-item {
     float: left;
     margin: 10px 50px 0px 0px;
+}
 
+.div-nav {
+    position: fixed;
+    z-index: 1;
 
+    min-width: 100%;
 }
 
 
@@ -106,27 +112,51 @@ nav {
 }
 
 .page {
-    padding-top: 9rem;
     margin: 0 auto;
     max-width: 1000px;
     background-color: white;
+    margin-top: 10rem;
+    padding: 3rem;
+}
 
 .content {
     margin: 0 5rem;
 }
 
+.carousel slide {
+    width: 100px;
 }
 
-.form {
-    margin: 100px;
-}
+
+
 
 body {
     overflow-x: scroll;
-    background-color: gray;
+    background: url("../img/5.jpg");
+    background-size: 100%;
 }
 
 .description {
     text-align: left;
-    border: 2px solid black;
+    height: 30rem;
+    width: 100%;
+    float: left;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
+
+.slide-description {
+    float: left;
+    width: 50%;
+    height: 100%;
+}
+
+.description-text {
+    float: left;
+    width: 400px;
+}
+
+.d-block {
+    display: block;
+    margin: 0 auto;
 }

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div align="center" class="div">
-    <h1>Авторизация</h1>
+<div align="center" class="login-page">
     <div class="form">
-        <form action="" method="post" novalidate>
+        <h1>Авторизация</h1>
+        <form method="post" novalidate>
             {{ form.hidden_tag() }}
                 {{ form.username.label }}<br>
-                {{ form.username(class="form-control") }}<br>
+                {{ form.username(class="form-control form-control-lg") }}<br>
                 {% for error in form.username.errors %}
                     <div class="alert alert-danger" role="alert">
                         {{ error }}
@@ -15,7 +15,7 @@
                 {% endfor %}
 
                 {{ form.password.label }}<br>
-                {{ form.password(class="form-control", type="password") }}<br>
+                {{ form.password(class="form-control form-control-lg", type="password") }}<br>
                 {% for error in form.password.errors %}
                     <div class="alert alert-danger" role="alert">
                         {{ error }}
@@ -26,7 +26,7 @@
 
 
             <br><br>
-            {{ form.submit(type="submit", class="btn btn-primary") }}
+            {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
         </form>
     </div>
 </div>

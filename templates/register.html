@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="div" align="center">
-  <h1>Регистрация</h1>
+<div align="center">
   <div class="form" align="center">
+      <h1>Регистрация</h1>
     <form action="" method="post">
       {{ form.hidden_tag() }}
           {{ form.email.label }}<br>
@@ -44,7 +44,7 @@
               {{ error }}
             </p>
           {% endfor %}
-        {{ form.submit(class="btn btn-primary", type="submit") }}
+        {{ form.submit(class="btn btn-primary btn-lg", type="submit") }}
         {{ message }}
     </form>
   </div>
