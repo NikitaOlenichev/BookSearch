@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="search">
+        <div class="form-floating">
+            {{ form.title(class="form-control", placeholder="Название") }}
+            {{ form.title.label(for="floatingInput") }}
+        </div>
+        <div class="author-genre">
+            <div class="form-floating form-author">
+                {{ form.author(class="form-control", placeholder="Автор") }}
+                {{ form.author.label(for="floatingInput") }}
+            </div>
+            <div class="form-floating form-genre">
+                {{ form.genre(class="form-control form-control-lg", placeholder="Жанр") }}
+                {{ form.genre.label(for="floatingInput") }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

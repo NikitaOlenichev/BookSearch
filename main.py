@@ -4,6 +4,7 @@ from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from flask_login import LoginManager, login_user, logout_user, login_required
 from data.users import User
+from forms.search import Search
 import datetime
 
 app = Flask(__name__)
@@ -36,6 +37,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    print(form.username)
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.username.data).first()
@@ -71,6 +73,12 @@ def reqister():
         db_sess.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    form = Search()
+    return render_template('search.html', title='Поиск', form=form)
 
 
 if __name__ == '__main__':
