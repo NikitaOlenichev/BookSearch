@@ -56,9 +56,7 @@ a.main {
     border-bottom: 0.2rem solid black;
 }
 
-table td {
-  width: 50%;
-}
+
 
 .lab {
     margin-top: 10px;
@@ -133,7 +131,7 @@ table.top {
 
 body {
     overflow-x: scroll;
-    background: url("../img/5.jpg");
+    background-color: gray;
     background-size: 100%;
 }
 
@@ -163,13 +161,18 @@ body {
     margin: 0 auto;
 }
 
-.search {
-    margin-top: 10rem;
+.search-btn {
+    margin-top: 5rem;
 }
 
-.form-author, .form-genre{
+.form-author, .form-genre {
     width: 50%;
     float: left;
 }
+
+.books-table {
+    margin-top: 4rem;
+}
+
 
 
