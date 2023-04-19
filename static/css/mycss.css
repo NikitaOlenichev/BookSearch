@@ -131,7 +131,7 @@ table.top {
 
 body {
     overflow-x: scroll;
-    background-color: gray;
+    background: url("../img/5.jpg");
     background-size: 100%;
 }
 
@@ -159,4 +159,9 @@ body {
 .d-block {
     display: block;
     margin: 0 auto;
+}
+
+.form-author, .form-genre {
+    width: 50%;
+    float: left;
 }
