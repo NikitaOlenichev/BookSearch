@@ -56,9 +56,7 @@ a.main {
     border-bottom: 0.2rem solid black;
 }
 
-table td {
-  width: 50%;
-}
+
 
 .lab {
     margin-top: 10px;
@@ -113,7 +111,7 @@ table.top {
 
 .page {
     margin: 0 auto;
-    max-width: 1000px;
+    width: 1000px;
     background-color: white;
     margin-top: 10rem;
     padding: 3rem;
@@ -125,6 +123,7 @@ table.top {
 
 .carousel slide {
     width: 100px;
+
 }
 
 
@@ -132,7 +131,7 @@ table.top {
 
 body {
     overflow-x: scroll;
-    background: url("../img/5.jpg");
+    background-color: gray;
     background-size: 100%;
 }
 
@@ -143,6 +142,7 @@ body {
     float: left;
     padding: 1rem;
     font-size: 1.5rem;
+    min-width: 1000px;
 }
 
 .slide-description {

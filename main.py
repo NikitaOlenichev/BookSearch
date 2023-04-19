@@ -4,6 +4,12 @@ from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from flask_login import LoginManager, login_user, logout_user, login_required
 from data.users import User
+from data.books import Book
+from data.authors import Author
+from data.info import Info
+from data.genres import Genre
+from data.images import Image
+from forms.search import Search
 import datetime
 
 app = Flask(__name__)
@@ -72,6 +78,26 @@ def reqister():
         db_sess.commit()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
+
+
+@app.route('/search/<int:page>', methods=['GET', 'POST'])
+def search(page):
+    db_sess = db_session.create_session()
+    sp = db_sess.query(Book).filter(Book.id < 11).all()
+    sp2 = []
+    for book in sp:
+        author = db_sess.query(Author).filter(Author.id == book.author_id).first()
+        image = db_sess.query(Image).filter(Image.id == book.image).first()
+        info = db_sess.query(Info).filter(Info.id == book.info).first()
+        genre = db_sess.query(Genre).filter(Genre.id == book.genre_id).first()
+        sp2.append([image.link,
+                    book.title,
+                    author.name,
+                    genre.title,
+                    info.info])
+    print(sp2)
+    form = Search()
+    return render_template('search.html', title='Поиск', form=form, sp=sp2)
 
 
 if __name__ == '__main__':
