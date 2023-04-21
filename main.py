@@ -1,3 +1,4 @@
+import books_resources
 from data import db_session
 from flask import Flask, render_template, redirect
 from forms.login_form import LoginForm
@@ -10,6 +11,7 @@ from data.info import Info
 from data.genres import Genre
 from data.images import Image
 from forms.search import Search
+from flask_restful import reqparse, abort, Api, Resource
 import datetime
 
 app = Flask(__name__)
@@ -17,6 +19,8 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=365
 )
+api = Api(app)
+api.add_resource(books_resources.BookResource, '/api/book/<string:book_title>')
 login_manager = LoginManager()
 login_manager.init_app(app)
 

@@ -51,10 +51,10 @@ for i in range(90, 121):
         db_sess.commit()
         db_sess.add(Book(
             title=title,
-            info=db_sess.query(Info).filter(Info.info == info).first().id,
+            info_id=db_sess.query(Info).filter(Info.info == info).first().id,
             genre_id=db_sess.query(Genre).filter(Genre.title == genre).first().id,
             author_id=db_sess.query(Author).filter(Author.name == author).first().id,
-            image=db_sess.query(Image).filter(Image.link == image).first().id
+            image_id=db_sess.query(Image).filter(Image.link == image).first().id
         ))
         db_sess.commit()
 
