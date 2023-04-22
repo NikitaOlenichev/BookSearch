@@ -164,4 +164,9 @@ body {
 .form-author, .form-genre {
     width: 50%;
     float: left;
+
+}
+
+.form-floating {
+    z-index: 0;
 }
