@@ -140,6 +140,7 @@ def book_page(book_id):
     work_year = book.work_year
     work_year_of_write = book.work_year_of_write
     noms = book.noms
+    orig_name = book.orig_name
     if noms:
         noms = noms.split(';')
     wins = book.wins
@@ -152,7 +153,6 @@ def book_page(book_id):
     if comment_form.validate_on_submit():
         if not book.comments:
             book.comments = ''
-        print(datetime.datetime.now())
         book.comments += f'{current_user.name}&{comment_form.comment_field.data}&' \
                          f'{datetime.datetime.now().strftime("%H:%M:%S %m.%d.%Y")}#'
         comment_form.comment_field.data = None
@@ -164,7 +164,7 @@ def book_page(book_id):
         comments = list(map(lambda x: x.split('&'), comments))
     return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
                            similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year,
-                           form=comment_form, comments=comments)
+                           form=comment_form, comments=comments, orig_name=orig_name)
 
 
 if __name__ == '__main__':

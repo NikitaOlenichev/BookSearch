@@ -182,8 +182,8 @@ body {
 .book-page-description{
     margin: 1rem;
     font-size: 1.5rem;
-
     padding: 1rem;
+    border-top: 3px solid black;
 }
 
 .book-page-author-genre {
@@ -247,4 +247,14 @@ body {
 
 .date-comment {
     font-size: 1.1rem;
+}
+
+.author-desc {
+    border-bottom: 3px solid black;
+}
+
+.similars-awards {
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 3px solid black;
 }

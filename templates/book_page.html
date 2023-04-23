@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="page" align="center">
-    <div class="book-page-title">{{ title }}</div>
+    <div class="book-page-title">{{ title }}<br>({{ orig_name }})</div>
     {% if image != '-' %}
     <img src="{{ image }}" class="book-page-image">
     {% else %}
@@ -11,6 +11,8 @@
     <div class="book-page-description" align="left">
         <div class="author-desc">
             <div class="book-page-author-genre">
+                <p>Название: {{ title }}</p>
+                <p>Оригинальное название: {{ orig_name }}</p>
                 {% if author and author != '-' %}
                 <p>Автор: {{ author }}</p>
                 {% endif %}
