@@ -164,4 +164,97 @@ body {
 .form-author, .form-genre {
     width: 50%;
     float: left;
+
+}
+
+.form-floating {
+    z-index: 0;
+}
+
+.book-page-image {
+    width: 30rem;
+}
+
+.book-page-title {
+    font-size: 4rem;
+}
+
+.book-page-description{
+    margin: 1rem;
+    font-size: 1.5rem;
+    padding: 1rem;
+    border-top: 3px solid black;
+}
+
+.book-page-author-genre {
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    padding: 1rem;
+
+}
+
+.book-info {
+
+    padding: 1rem;
+    vertical-align: top;
+    display: inline-block;
+    width: 67%;
+
+}
+
+.similars {
+    width: 40%;
+    margin-left: 55%;
+}
+
+.awards {
+    margin-left: 5%;
+    width: 40%;
+    float: left;
+}
+
+.comments-block {
+    width: 90%;
+    text-align: left;
+}
+
+.card-header {
+    font-size: 1.5rem;
+}
+
+.comment-field {
+    width: 70%;
+    display: inline-block;
+}
+
+.comment-btn {
+    vertical-align: top;
+}
+
+.me-auto {
+    font-size: 1.5rem;
+}
+
+.toast-body {
+    font-size: 1.3rem;
+}
+
+.toast {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.date-comment {
+    font-size: 1.1rem;
+}
+
+.author-desc {
+    border-bottom: 3px solid black;
+}
+
+.similars-awards {
+    margin-top: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 3px solid black;
 }

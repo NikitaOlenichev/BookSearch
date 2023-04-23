@@ -2,8 +2,10 @@
 
 {% block content %}
 
-    <div class="page">
-        <div class="search">
+<div class="page">
+    <div class="search">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
             <div class="form-floating">
                 {{ form.title(class="form-control", placeholder="Название") }}
                 {{ form.title.label(for="floatingInput") }}
@@ -21,37 +23,79 @@
             <div class="search-btn">
                 {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
             </div>
-        </div>
-        <div class="books-table">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <td>Обложка</td>
-                        <td>Название</td>
-                        <td>Автор</td>
-                        <td>Жанр</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for book in sp %}
-                        <tr class="table-light">
-                            <td>
-                                {% if book[0] != "-" %}
-                                    <img src={{ book[0] }} width="100px">
-                                {% else %}
-                                    <img src="../static/img/no-data.jpg" width="100px">
-                                {% endif %}
-                            </td>
-                        {% for item in book[1:-1] %}
-                            <td>
-                                {{ item }}
-                            </td>
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        </form>
     </div>
+    <div class="books-table">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <td>Обложка</td>
+                <td>Название</td>
+                <td>Автор</td>
+                <td>Жанр</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in sp %}
+
+                <tr class="table-light">
+                    <td>
+                        <a href="/book_page/{{ book[-1] }}">
+                        {% if book[0] != "-" %}
+                        <img src={{ book[0] }} width="100px">
+                        {% else %}
+                        <img src="../static/img/no-data.jpg" width="100px">
+                        {% endif %}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/book_page/{{ book[-1] }}">{{ book[1] }}</a>
+                    </td>
+                    {% for item in book[2:-2] %}
+                    <td>
+                        {{ item }}
+                    </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if ln %}
+    <div>
+
+        <ul class="pagination">
+            {% if page == 1 %}
+            <li class="page-item disabled">
+            {% else %}
+            <li class="page-item">
+            {% endif %}
+                <a class="page-link" href="{{ link }}{{ page - 1 }}?title={{ ttl_fltr }}&author={{ author_fltr }}&genre={{ genre_fltr }}">&laquo;</a>
+            </li>
+            {% for i in range(pg_f, pg_l + 1) %}
+            {% if i == page %}
+            <li class="page-item active">
+                {% else %}
+            <li class="page-item">
+                {% endif %}
+                <a class="page-link"
+                   href="{{ link }}{{ i }}?title={{ ttl_fltr }}&author={{ author_fltr }}&genre={{ genre_fltr }}">{{ i }}</a>
+            </li>
+            {% endfor %}
+            <li class="page-item disabled">
+                <a class="page-link">...</a>
+            </li>
+            {% if page == ln %}
+            <li class="page-item disabled">
+            {% else %}
+            <li class="page-item">
+            {% endif %}
+                <a class="page-link"
+                   href="{{ link }}{{ page + 1 }}?title={{ ttl_fltr }}&author={{ author_fltr }}&genre={{ genre_fltr }}">&raquo;</a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+</div>
 
 {% endblock %}
