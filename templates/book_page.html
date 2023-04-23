@@ -3,10 +3,32 @@
 {% block content %}
 <div class="page" align="center">
     <div class="book-page-title">{{ title }}<br>({{ orig_name }})</div>
-    {% if image != '-' %}
-    <img src="{{ image }}" class="book-page-image">
-    {% else %}
-    <img src="../static/img/no-data.jpg" class="book-page-image">
+    <div class="image-status">
+        {% if image != '-' %}
+        <img src="{{ image }}" class="book-page-image">
+        {% else %}
+        <img src="../static/img/no-data.jpg" class="book-page-image">
+        {% endif %}
+    </div>
+    {% if current_user.is_authenticated %}
+
+    <div class="book-buttons">
+        <div class="desc-users">
+            <p>Кол-во читающих: {{ num_of_readers }}</p>
+            <p>Кол-во добавивших в избранное: {{ favorites }}</p>
+        </div>
+        {% if book_id in user_books %}
+        <a href="/del_book/{{book_id}}"><button class="btn btn-primary btn-lg">Удалить из читаемого</button></a>
+        {% else %}
+        <a href="/add_book/{{book_id}}"><button class="btn btn-primary btn-lg">Добавить в читаемое</button></a>
+        {% endif %}
+
+        {% if book_id in favorite_books %}
+        <a href="/del_favorite_book/{{book_id}}"><button class="btn btn-lg btn-primary">Удалить из избранного</button></a>
+        {% else %}
+        <a href="/add_favorite_book/{{book_id}}"><button class="btn btn-lg btn-primary">Добавить в избранное</button></a>
+        {% endif %}
+    </div>
     {% endif %}
     <div class="book-page-description" align="left">
         <div class="author-desc">

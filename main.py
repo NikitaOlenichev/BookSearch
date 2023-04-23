@@ -11,6 +11,8 @@ from data.genres import Genre
 from data.images import Image
 from forms.search import Search
 from forms.add_comment import CommentForm
+from flask_restful import reqparse, abort, Api, Resource
+import books_resources
 import datetime
 
 app = Flask(__name__)
@@ -18,6 +20,8 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=365
 )
+api = Api(app)
+api.add_resource(books_resources.BookResource, '/api/book/<string:book_title>')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -132,6 +136,15 @@ def search(page):
 def book_page(book_id):
     session = db_session.create_session()
     book = session.query(Book).filter(Book.id == book_id).first()
+    user = session.query(User).filter(User.id == current_user.id).first()
+    books = user.books
+    if books:
+        books = list(map(int, books.split(';')[:-1]))
+    print(books)
+    favorite_books = user.favorite_books
+    if favorite_books:
+        favorite_books = list(map(int, favorite_books.split(';')[:-1]))
+    print(favorite_books)
     image = book.image.link
     title = book.title
     genre = book.genre.title
@@ -139,6 +152,8 @@ def book_page(book_id):
     info = book.info.info
     work_year = book.work_year
     work_year_of_write = book.work_year_of_write
+    num_of_readers = book.num_of_readers
+    favorites = book.favorite
     noms = book.noms
     orig_name = book.orig_name
     if noms:
@@ -164,7 +179,78 @@ def book_page(book_id):
         comments = list(map(lambda x: x.split('&'), comments))
     return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
                            similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year,
-                           form=comment_form, comments=comments, orig_name=orig_name)
+                           form=comment_form, comments=comments, orig_name=orig_name, book_id=book_id,
+                           user_books=books if books else [], favorite_books=favorite_books if favorite_books else [],
+                           num_of_readers=num_of_readers, favorites=favorites)
+
+
+@app.route('/add_book/<int:book_id>')
+def add_book(book_id):
+    session = db_session.create_session()
+    user = session.query(User).filter(User.id == current_user.id).first()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    book.num_of_readers += 1
+    books = user.books
+    if not books:
+        books = ''
+    books += str(book_id) + ';'
+    user.books = books
+    session.commit()
+    return redirect(f'/book_page/{book_id}')
+
+
+@app.route('/del_book/<int:book_id>')
+def del_book(book_id):
+    session = db_session.create_session()
+    user = session.query(User).filter(User.id == current_user.id).first()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    book.num_of_readers -= 1
+    books = user.books.split(';')[:-1]
+    del books[books.index(str(book_id))]
+    if books:
+        books = ';'.join(books) + ';'
+    else:
+        books = ''
+    user.books = books
+    session.commit()
+    return redirect(f'/book_page/{book_id}')
+
+
+@app.route('/add_favorite_book/<int:book_id>')
+def add_favorite_book(book_id):
+    session = db_session.create_session()
+    user = session.query(User).filter(User.id == current_user.id).first()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    book.favorite += 1
+    books = user.favorite_books
+    if not books:
+        books = ''
+    books += str(book_id) + ';'
+    user.favorite_books = books
+    session.commit()
+    return redirect(f'/book_page/{book_id}')
+
+
+@app.route('/del_favorite_book/<int:book_id>')
+def del_favorite_book(book_id):
+    session = db_session.create_session()
+    user = session.query(User).filter(User.id == current_user.id).first()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    book.favorite -= 1
+    books = user.favorite_books.split(';')[:-1]
+    del books[books.index(str(book_id))]
+    if books:
+        books = ';'.join(books) + ';'
+    else:
+        books = None
+    user.favorite_books = books
+    session.commit()
+    return redirect(f'/book_page/{book_id}')
+
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 
 if __name__ == '__main__':

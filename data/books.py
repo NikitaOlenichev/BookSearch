@@ -1,9 +1,10 @@
 import sqlalchemy
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
-class Book(SqlAlchemyBase):
+class Book(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'books'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
@@ -23,6 +24,8 @@ class Book(SqlAlchemyBase):
     wins = sqlalchemy.Column(sqlalchemy.String)
     similars = sqlalchemy.Column(sqlalchemy.String)
     comments = sqlalchemy.Column(sqlalchemy.String)
+    num_of_readers = sqlalchemy.Column(sqlalchemy.Integer, default=0)
+    favorite = sqlalchemy.Column(sqlalchemy.Integer, default=0)
 
 
 

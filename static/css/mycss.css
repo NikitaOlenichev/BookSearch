@@ -2,7 +2,6 @@ html {
     font-size: 14px;
 }
 
-
 h2.main-title {
     margin-top: 0.6rem;
     font-size: 2rem;
@@ -10,12 +9,6 @@ h2.main-title {
 
 div.carousel {
     margin: 0.5rem;
-}
-
-
-.login-page {
-
-
 }
 
 .form {
@@ -30,7 +23,6 @@ div.carousel {
 .form h1{
     text-align: center;
 }
-
 
 a.button {
     text-decoration: none;
@@ -57,7 +49,6 @@ a.main {
 }
 
 
-
 .lab {
     margin-top: 10px;
 }
@@ -65,7 +56,6 @@ a.main {
 table.top {
     width: 200px;
 }
-
 
 
 .menu {
@@ -80,8 +70,6 @@ table.top {
     margin-right: 50px;
 }
 
-
-
 .navbar {
      background-color: white;
 }
@@ -94,7 +82,6 @@ table.top {
 .div-nav {
     position: fixed;
     z-index: 1;
-
     min-width: 100%;
 }
 
@@ -123,11 +110,7 @@ table.top {
 
 .carousel slide {
     width: 100px;
-
 }
-
-
-
 
 body {
     overflow-x: scroll;
@@ -164,7 +147,6 @@ body {
 .form-author, .form-genre {
     width: 50%;
     float: left;
-
 }
 
 .form-floating {
@@ -191,27 +173,27 @@ body {
     width: 30%;
     vertical-align: top;
     padding: 1rem;
-
 }
 
 .book-info {
-
+    display: inline-block;
     padding: 1rem;
     vertical-align: top;
     display: inline-block;
     width: 67%;
-
 }
 
 .similars {
+    display: inline-block;
     width: 40%;
-    margin-left: 55%;
+    margin-left: 10%;
+    vertical-align: top;
 }
 
 .awards {
+    display: inline-block;
     margin-left: 5%;
     width: 40%;
-    float: left;
 }
 
 .comments-block {
@@ -258,3 +240,9 @@ body {
     padding-bottom: 2rem;
     border-bottom: 3px solid black;
 }
+
+.desc-users {
+    font-size: 2rem;
+    margin: 1rem;
+}
+
