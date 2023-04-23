@@ -1,5 +1,6 @@
 from data import db_session
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, make_response, jsonify
+from flask_restful import Api
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -11,6 +12,7 @@ from data.genres import Genre
 from data.images import Image
 from forms.search import Search
 from forms.add_comment import CommentForm
+from data.books_resources import BookResource
 import datetime
 
 app = Flask(__name__)
@@ -20,6 +22,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
 )
 login_manager = LoginManager()
 login_manager.init_app(app)
+api = Api(app)
 
 
 @app.route('/logout')
@@ -32,6 +35,16 @@ def logout():
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify({'error': 'Bad request'}), 400)
 
 
 @app.route('/')
@@ -167,6 +180,11 @@ def book_page(book_id):
                            form=comment_form, comments=comments, orig_name=orig_name)
 
 
-if __name__ == '__main__':
+def main():
     db_session.global_init("db/books.db")
+    api.add_resource(BookResource, '/api/book/<book_title>')
     app.run(port=5000, host='127.0.0.1')
+
+
+if __name__ == '__main__':
+    main()
