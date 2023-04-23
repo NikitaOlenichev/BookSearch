@@ -170,3 +170,33 @@ body {
 .form-floating {
     z-index: 0;
 }
+
+.book-page-image {
+    width: 30rem;
+}
+
+.book-page-title {
+    font-size: 4rem;
+}
+
+.book-page-description{
+    margin: 1rem;
+    font-size: 1.5rem;
+    border: 1px solid black;
+    padding: 1rem;
+}
+
+.book-page-author-genre {
+    float: left;
+    width: 20%;
+    height: 30rem;
+    border: 1px solid black;
+}
+
+.book-info {
+    border: 1px solid black;
+    height: 30rem;
+    padding: 1rem;
+    margin-left: 20%;
+
+}

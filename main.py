@@ -95,13 +95,13 @@ def search(page):
     title_fltr = request.args.get('title')
     print(title_fltr)
     if title_fltr:
-        sp = sp.filter(Book.title == title_fltr)
+        sp = sp.filter(Book.title.like(f'%{title_fltr.lower()}%'))
         form.title.data = title_fltr
     if genre_fltr:
-        sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title == genre_fltr).first())
+        sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title.like(f'%{genre_fltr}%')).first())
         form.genre.data = genre_fltr
     if author_fltr:
-        sp = sp.filter(Book.author == db_sess.query(Author).filter(Author.name == author_fltr).first())
+        sp = sp.filter(Book.author == db_sess.query(Author).filter(Author.name.like(f'%{author_fltr}%')).first())
         form.author.data = author_fltr
     sp = sp.all()
     sp.sort(key=lambda x: x.title)
@@ -114,7 +114,8 @@ def search(page):
                     book.title,
                     author.name,
                     genre.title,
-                    info.info])
+                    info.info,
+                    book.id])
     ln = (len(sp) - 1) // 10 + 1
     pg_f = max(page - 4, 1)
     pg_l = min(page + 4, ln)
@@ -122,8 +123,27 @@ def search(page):
         pg_l = min(9, ln)
     if page > ln - 4:
         pg_f = max(1, ln - 8)
-    return render_template('search.html', title='Поиск', form=form, sp=sp2, page=page, link=f'/search/', ln=len(sp), msg='',
-                           author_fltr=author_fltr if author_fltr else '', genre_fltr=genre_fltr if genre_fltr else '', ttl_fltr=title_fltr if title_fltr else '', pg_l=pg_l, pg_f=pg_f)
+    return render_template('search.html', title='Поиск', form=form, sp=sp2, page=page, link=f'/search/', ln=ln, msg='',
+                           author_fltr=author_fltr if author_fltr else '', genre_fltr=genre_fltr if genre_fltr else '',
+                           ttl_fltr=title_fltr if title_fltr else '', pg_l=pg_l, pg_f=pg_f)
+
+
+@app.route('/book_page/<int:book_id>')
+def book_page(book_id):
+    session = db_session.create_session()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    image = book.image.link
+    title = book.title
+    genre = book.genre.title
+    author = book.author.name
+    info = book.info.info
+    work_year = book.work_year
+    work_year_of_write = book.work_year_of_write
+    noms = book.noms.split(';')
+    wins = book.wins.split(';')
+    similars = book.similars.split(';')
+    return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
+                           similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year)
 
 
 if __name__ == '__main__':

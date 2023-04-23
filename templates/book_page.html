@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="page" align="center">
+        <div class="book-page-title">{{ title }}</div>
+        {% if image != '-' %}
+            <img src="{{ image }}" class="book-page-image">
+        {% else %}
+            <img src="../static/img/no-data.jpg" class="book-page-image">
+        {% endif %}
+        <div class="book-page-description" align="left">
+            <div class="book-page-author-genre">
+                {% if author and author != '-' %}
+                    <p>Автор: {{ author }}</p>
+                {% endif %}
+                {% if genre and genre != '-' %}
+                    <p>Жанр: {{ genre }}</p>
+                {% endif %}
+                {% if work_year %}
+                    <p>Год публикации: {{ work_year }}</p>
+                {% endif %}
+                {% if work_year_of_write %}
+                    <p>Год написания: {{ work_year_of_write }}</p>
+                {% endif %}
+                {% if similars %}
+                    <div class="similars">
+                        <p>Похожие произведения:</p>
+                        {% for item in similars %}
+                            <p>{{ item }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if noms %}
+                    <div class="nominations">
+                        <p>Номинации:</p>
+                        {% for item in noms %}
+                            <p>{{ item }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% if wins[0] %}
+                    <div class="wins">
+                        <p>Награды:</p>
+                        {% for item in wins %}
+                            <p>{{ item }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="book-info">
+                <p>Аннотация:</p>
+                <p>{{ info }}</p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

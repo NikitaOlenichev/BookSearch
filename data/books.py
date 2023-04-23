@@ -16,3 +16,11 @@ class Book(SqlAlchemyBase):
     image_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('images.id'))
     info = orm.relationship('Info')
     image = orm.relationship('Image')
+    work_year = sqlalchemy.Column(sqlalchemy.Integer)
+    work_year_of_write = sqlalchemy.Column(sqlalchemy.Integer)
+    noms = sqlalchemy.Column(sqlalchemy.String)
+    wins = sqlalchemy.Column(sqlalchemy.String)
+    similars = sqlalchemy.Column(sqlalchemy.String)
+
+
+

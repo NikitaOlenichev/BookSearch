@@ -12,7 +12,7 @@ ats = []
 db_session.global_init("db/books.db")
 db_sess = db_session.create_session()
 
-for i in range(10, 300):
+for i in range(1, 200):
     res = requests.get(f'https://api.fantlab.ru/work/{i}/extended').json()
     try:
         title = res['work_name']
@@ -27,19 +27,39 @@ for i in range(10, 300):
             genre = '-'
 
         try:
-            author = res['authors'][0]['name']
+            authors_req = res['authors']
+            authors = ''
+            for aut in authors_req:
+                if aut['type'] == 'autor':
+                    author = aut['name']
+                    break
         except Exception:
             author = '-'
-        try:
-            info = res['work_description']
-        except Exception:
-            info = '-'
+        info = res.get('work_description', '-')
+        print(authors)
         try:
             image = 'https://fantlab.ru' + res['image']
         except Exception:
             image = '-'
-
-
+        work_year = res.get('work_year', '-')
+        work_year_of_write = res.get('work_year_of_write', '-')
+        note = res.get('work_notes', '-')
+        awards_req = res.get('awards')
+        noms = ''
+        wins = ''
+        if awards_req:
+            nom_req = awards_req.get('nom')
+            if nom_req:
+                for nom in nom_req:
+                    noms += f'{nom.get("award_rusname", "-")} ({nom.get("contest_year", "-")});'
+            wins_req = awards_req.get('win')
+            if wins_req:
+                for win in wins_req:
+                    wins += f'{win.get("award_rusname", "")} ({win.get("contest_year", "-")});'
+        res = requests.get(f'https://api.fantlab.ru/work/{i}/similars').json()
+        similars = ''
+        for similar in res:
+            similars += f'{similar.get("name", "")};'
         if not db_sess.query(Genre).filter(Genre.title == genre).first():
             db_sess.add(Genre(title=genre))
         if not db_sess.query(Author).filter(Author.name == author).first():
@@ -54,7 +74,12 @@ for i in range(10, 300):
             info_id=db_sess.query(Info).filter(Info.info == info).first().id,
             genre_id=db_sess.query(Genre).filter(Genre.title == genre).first().id,
             author_id=db_sess.query(Author).filter(Author.name == author).first().id,
-            image_id=db_sess.query(Image).filter(Image.link == image).first().id
+            image_id=db_sess.query(Image).filter(Image.link == image).first().id,
+            similars=similars,
+            work_year=work_year,
+            work_year_of_write=work_year_of_write,
+            noms=noms,
+            wins=wins,
         ))
         db_sess.commit()
 
