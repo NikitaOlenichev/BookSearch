@@ -12,7 +12,7 @@ ats = []
 db_session.global_init("db/books.db")
 db_sess = db_session.create_session()
 
-for i in range(1, 200):
+for i in range(1, 20):
     res = requests.get(f'https://api.fantlab.ru/work/{i}/extended').json()
     try:
         title = res['work_name']
@@ -20,6 +20,7 @@ for i in range(1, 200):
         title = '-'
     if title == '-' or not title:
         continue
+    orig_title = res['work_name_orig']
     if not db_sess.query(Book).filter(Book.title == title).first():
         try:
             genre = res['classificatory']['genre_group'][0]['genre'][0]['label']
@@ -36,7 +37,6 @@ for i in range(1, 200):
         except Exception:
             author = '-'
         info = res.get('work_description', '-')
-        print(authors)
         try:
             image = 'https://fantlab.ru' + res['image']
         except Exception:
@@ -71,6 +71,7 @@ for i in range(1, 200):
         db_sess.commit()
         db_sess.add(Book(
             title=title,
+            orig_name=orig_title,
             info_id=db_sess.query(Info).filter(Info.info == info).first().id,
             genre_id=db_sess.query(Genre).filter(Genre.title == genre).first().id,
             author_id=db_sess.query(Author).filter(Author.name == author).first().id,

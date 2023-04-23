@@ -8,6 +8,7 @@ class Book(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    orig_name = sqlalchemy.Column(sqlalchemy.String)
     genre_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('genres.id'))
     author_id = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('authors.id'))
     genre = orm.relationship('Genre')
@@ -21,6 +22,7 @@ class Book(SqlAlchemyBase):
     noms = sqlalchemy.Column(sqlalchemy.String)
     wins = sqlalchemy.Column(sqlalchemy.String)
     similars = sqlalchemy.Column(sqlalchemy.String)
+    comments = sqlalchemy.Column(sqlalchemy.String)
 
 
 

@@ -2,7 +2,7 @@ from data import db_session
 from flask import Flask, render_template, redirect, request
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.users import User
 from data.books import Book
 from data.authors import Author
@@ -10,6 +10,7 @@ from data.info import Info
 from data.genres import Genre
 from data.images import Image
 from forms.search import Search
+from forms.add_comment import CommentForm
 import datetime
 
 app = Flask(__name__)
@@ -93,9 +94,8 @@ def search(page):
     author_fltr = request.args.get('author')
     genre_fltr = request.args.get('genre')
     title_fltr = request.args.get('title')
-    print(title_fltr)
     if title_fltr:
-        sp = sp.filter(Book.title.like(f'%{title_fltr.lower()}%'))
+        sp = sp.filter(Book.title.like(f'%{title_fltr}%'))
         form.title.data = title_fltr
     if genre_fltr:
         sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title.like(f'%{genre_fltr}%')).first())
@@ -128,7 +128,7 @@ def search(page):
                            ttl_fltr=title_fltr if title_fltr else '', pg_l=pg_l, pg_f=pg_f)
 
 
-@app.route('/book_page/<int:book_id>')
+@app.route('/book_page/<int:book_id>', methods=['GET', 'POST'])
 def book_page(book_id):
     session = db_session.create_session()
     book = session.query(Book).filter(Book.id == book_id).first()
@@ -139,11 +139,32 @@ def book_page(book_id):
     info = book.info.info
     work_year = book.work_year
     work_year_of_write = book.work_year_of_write
-    noms = book.noms.split(';')
-    wins = book.wins.split(';')
-    similars = book.similars.split(';')
+    noms = book.noms
+    if noms:
+        noms = noms.split(';')
+    wins = book.wins
+    if wins:
+        wins = wins.split(';')
+    similars = book.similars
+    if similars:
+        similars = similars.split(';')
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        if not book.comments:
+            book.comments = ''
+        print(datetime.datetime.now())
+        book.comments += f'{current_user.name}&{comment_form.comment_field.data}&' \
+                         f'{datetime.datetime.now().strftime("%H:%M:%S %m.%d.%Y")}#'
+        comment_form.comment_field.data = None
+        session.commit()
+        return redirect(f'/book_page/{book_id}')
+    comments = book.comments
+    if comments:
+        comments = comments.split('#')[:-1]
+        comments = list(map(lambda x: x.split('&'), comments))
     return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
-                           similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year)
+                           similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year,
+                           form=comment_form, comments=comments)
 
 
 if __name__ == '__main__':

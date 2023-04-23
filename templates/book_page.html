@@ -1,60 +1,119 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="page" align="center">
-        <div class="book-page-title">{{ title }}</div>
-        {% if image != '-' %}
-            <img src="{{ image }}" class="book-page-image">
-        {% else %}
-            <img src="../static/img/no-data.jpg" class="book-page-image">
-        {% endif %}
-        <div class="book-page-description" align="left">
+<div class="page" align="center">
+    <div class="book-page-title">{{ title }}</div>
+    {% if image != '-' %}
+    <img src="{{ image }}" class="book-page-image">
+    {% else %}
+    <img src="../static/img/no-data.jpg" class="book-page-image">
+    {% endif %}
+    <div class="book-page-description" align="left">
+        <div class="author-desc">
             <div class="book-page-author-genre">
                 {% if author and author != '-' %}
-                    <p>Автор: {{ author }}</p>
+                <p>Автор: {{ author }}</p>
                 {% endif %}
                 {% if genre and genre != '-' %}
-                    <p>Жанр: {{ genre }}</p>
+                <p>Жанр: {{ genre }}</p>
                 {% endif %}
                 {% if work_year %}
-                    <p>Год публикации: {{ work_year }}</p>
+                <p>Год публикации: {{ work_year }}</p>
                 {% endif %}
                 {% if work_year_of_write %}
-                    <p>Год написания: {{ work_year_of_write }}</p>
-                {% endif %}
-                {% if similars %}
-                    <div class="similars">
-                        <p>Похожие произведения:</p>
-                        {% for item in similars %}
-                            <p>{{ item }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                {% if noms %}
-                    <div class="nominations">
-                        <p>Номинации:</p>
-                        {% for item in noms %}
-                            <p>{{ item }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-                {% if wins[0] %}
-                    <div class="wins">
-                        <p>Награды:</p>
-                        {% for item in wins %}
-                            <p>{{ item }}</p>
-                        {% endfor %}
-                    </div>
+                <p>Год написания: {{ work_year_of_write }}</p>
                 {% endif %}
             </div>
             <div class="book-info">
                 <p>Аннотация:</p>
                 <p>{{ info }}</p>
             </div>
+        </div>
+        <div class="similars-awards">
+            <div class="awards">
+                <div class="nominations">
+                    <p>Номинации:</p>
+                    {% if noms[0] %}
+                    <ul>
+                        {% for item in noms %}
+                        {% if item %}
+                        <li>{{ item }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p>-</p>
+                    {% endif %}
+                </div>
 
+                <div class="wins">
+                    <p>Награды:</p>
+                    {% if wins[0] %}
+                    <ul>
+                        {% for item in wins %}
+                        {% if item %}
+                        <li>{{ item }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="similars">
+                <p>Похожие произведения:</p>
+                {% if similars[0] %}
+                <ul>
+                    {% for item in similars %}
+                    {% if item %}
+                    <li>{{ item }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% else %}
+                -
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <div class="card border-success mb-3 comments-block">
+        <div class="card-header">Комментарии пользователей</div>
+        <div class="card-body">
+            {% if current_user.is_authenticated %}
+            <form method="post">
+                {{ form.hidden_tag() }}
+                <div>
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div class="toast show">
+                              <div class="toast-header">
+                                <strong class="me-auto">{{ comment[0] }}</strong>
+                                  <span class="date-comment">{{ comment[2] }}</span>
+                                <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
+                                  <span aria-hidden="true"></span>
+                                </button>
+                              </div>
+                              <div class="toast-body">
+                                {{ comment[1] }}
+                              </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.comment_field(class="form-control comment-field", id="exampleTextarea", rows="3") }}
+                    {{ form.submit(type="submit", class="btn btn-primary comment-btn btn-lg") }}
+                </div>
+            </form>
+            {% else %}
+            Для добавления коммениариев необходимо авторизоваться
+            {% endif %}
         </div>
     </div>
-
+</div>
 
 
 {% endblock %}

@@ -182,21 +182,69 @@ body {
 .book-page-description{
     margin: 1rem;
     font-size: 1.5rem;
-    border: 1px solid black;
+
     padding: 1rem;
 }
 
 .book-page-author-genre {
-    float: left;
-    width: 20%;
-    height: 30rem;
-    border: 1px solid black;
+    display: inline-block;
+    width: 30%;
+    vertical-align: top;
+    padding: 1rem;
+
 }
 
 .book-info {
-    border: 1px solid black;
-    height: 30rem;
-    padding: 1rem;
-    margin-left: 20%;
 
+    padding: 1rem;
+    vertical-align: top;
+    display: inline-block;
+    width: 67%;
+
+}
+
+.similars {
+    width: 40%;
+    margin-left: 55%;
+}
+
+.awards {
+    margin-left: 5%;
+    width: 40%;
+    float: left;
+}
+
+.comments-block {
+    width: 90%;
+    text-align: left;
+}
+
+.card-header {
+    font-size: 1.5rem;
+}
+
+.comment-field {
+    width: 70%;
+    display: inline-block;
+}
+
+.comment-btn {
+    vertical-align: top;
+}
+
+.me-auto {
+    font-size: 1.5rem;
+}
+
+.toast-body {
+    font-size: 1.3rem;
+}
+
+.toast {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.date-comment {
+    font-size: 1.1rem;
 }
