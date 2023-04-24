@@ -22,9 +22,11 @@
             {% if current_user.is_authenticated %}
               <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="login">{{current_user.name}}</span></a>
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                     aria-expanded="false"><span class="login">{{current_user.name}}</span><img src={%block image%}{% endblock %}
+                                                                                                width="50px" height="50px" style="border-radius: 50%"></a>
                   <div class="dropdown-menu" style="">
-                    <a class="dropdown-item" href="#">Профиль</a>
+                    <a class="dropdown-item" href="/profile">Профиль</a>
                     <a class="dropdown-item" href='/logout'>Выйти</a>
                   </div>
                 </li>
@@ -56,18 +58,7 @@
               <div class="nav-item">
                 <a class="nav-link" href="/search/1">Поиск</a>
               </div>
-              <div class="nav-item">
-                <a class="nav-link" href="#">Рекомендации</a>
-              </div>
-              <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Топы</a>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Топ 100 книг</a>
-                  <a class="dropdown-item" href="#">Топ 100 авторов</a>
-                  <a class="dropdown-item" href="#">Топ 100 книг по оценкам пользователей</a>
-                </div>
-              </div>
-            </div>
+          </div>
       </nav>
     </div>
   </div>

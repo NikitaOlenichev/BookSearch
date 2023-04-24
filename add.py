@@ -12,13 +12,19 @@ ats = []
 db_session.global_init("db/books.db")
 db_sess = db_session.create_session()
 
-for i in range(1, 20):
+for i in range(1, 1000):
     res = requests.get(f'https://api.fantlab.ru/work/{i}/extended').json()
     try:
         title = res['work_name']
     except Exception:
         title = '-'
     if title == '-' or not title:
+        continue
+    try:
+        image = 'https://fantlab.ru' + res['image']
+    except Exception:
+        continue
+    if not res['image']:
         continue
     orig_title = res['work_name_orig']
     if not db_sess.query(Book).filter(Book.title == title).first():
@@ -37,10 +43,6 @@ for i in range(1, 20):
         except Exception:
             author = '-'
         info = res.get('work_description', '-')
-        try:
-            image = 'https://fantlab.ru' + res['image']
-        except Exception:
-            image = '-'
         work_year = res.get('work_year', '-')
         work_year_of_write = res.get('work_year_of_write', '-')
         note = res.get('work_notes', '-')

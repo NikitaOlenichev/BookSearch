@@ -1,10 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+
+{% block image %}
+    {% if not user_image %}
+        ../static/img/profile-def.png
+    {% else %}
+        ../static/img/users/{{current_user.id}}.jpg
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="page" align="center">
+        <div class="content">
+            <div class="profile-image">
+                {% if not image %}
+                    <p><img src="../static/img/profile-def.png" class="avat"></p>
+                {% else %}
+                    <p><img src="../static/img/users/{{ user_id }}.jpg" width="300px" height="300px" class="avat"></p>
+                {% endif %}
+                {{ name }}
+                <form method="post" enctype="multipart/form-data">
+                    <input type="file" class="form-control-file" id="photo" name="file" style="margin-left:8rem"><br>
+                    <button type="submit" class="btn btn-primary">Изменить</button>
+                </form>
+            </div>
+            <div class="user-desc">
+                <p>Логин: {{ name }}</p>
+                <p>Количество прочитанных книг: {{ cnt_read_books }}</p>
+                <p>Количество избранных книг: {{ cnt_favorites }}</p>
+                <p>Количество комментариев: {{ comments }}</p>
+            </div>
+            <div class="shelfs">
+                <span class="title-shelfs">Избранные книги</span>
+                {% for i in range(cnt_favorite_shelfs) %}
+                <div class="shelf">
+                    {% for book in favorites[i * 5:(i + 1) * 5] %}
+                    <div class="book">
+                        <a href="/book_page/{{book[2]}}">
+                            <img src="{{ book[0]}}" width="150px" height="225px">
+                            <p class="title-book-shelfs">{{ book[1] }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="shelfs">
+                <span class="title-shelfs">Прочитанные книги</span>
+                {% for i in range(cnt_read_shelfs) %}
+                <div class="shelf">
+                    {% for book in read_books[i * 5:(i + 1) * 5] %}
+                    <div class="book">
+                        <a href="/book_page/{{book[2]}}">
+                            <img src="{{ book[0] }}" width="150px" height="225px">
+                            <p class="title-book-shelfs">{{ book[1] }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

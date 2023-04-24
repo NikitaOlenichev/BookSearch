@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+
+{% block image %}
+    {% if not user_image %}
+        ../static/img/profile-def.png
+    {% else %}
+        ../static/img/users/{{current_user.id}}.jpg
+    {% endif %}
+{% endblock %}
+
+
+
 {% block content %}
 <div class="page" align="center">
     <div class="book-page-title">{{ title }}<br>({{ orig_name }})</div>

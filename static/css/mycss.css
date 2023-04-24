@@ -42,6 +42,7 @@ a.main {
 
 .login {
     font-size: 1.5rem;
+    padding-right: 1rem;
 }
 
 .title{
@@ -101,6 +102,7 @@ table.top {
     width: 1000px;
     background-color: white;
     margin-top: 10rem;
+    margin-bottom: 5rem;
     padding: 3rem;
 }
 
@@ -122,14 +124,14 @@ body {
     text-align: left;
     height: 30rem;
     width: 100%;
-    float: left;
+    display: inline-block;
     padding: 1rem;
     font-size: 1.5rem;
     min-width: 1000px;
 }
 
 .slide-description {
-    float: left;
+    display: inline-block;
     width: 50%;
     height: 100%;
 }
@@ -245,4 +247,72 @@ body {
     font-size: 2rem;
     margin: 1rem;
 }
+
+.content {
+    margin-top: 5rem;
+}
+
+.profile-image {
+    width: 80%;
+    text-align: center;
+    font-size: 2rem;
+
+}
+
+.avat {
+    border-radius: 50%;
+
+}
+
+.book {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.shelf {
+    border-bottom: 3px solid black;
+    margin: 3rem 0;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.shelfs {
+    text-align: left;
+    margin-top: 7rem;
+}
+
+.title-shelfs {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.title-book-shelfs {
+    width: 150px;
+}
+
+.user-desc {
+    text-align: left;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.books-table {
+    font-size: 1.5rem;
+}
+
+.top {
+    text-align: left;
+    font-size: 1.5rem;
+    display: inline-block;
+    padding: 1rem;
+}
+
+.top td{
+    padding: 0.2rem 1rem;
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+
+
 
