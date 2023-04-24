@@ -11,6 +11,7 @@ from data.genres import Genre
 from data.images import Image
 from forms.search import Search
 from forms.add_comment import CommentForm
+from data.books_resources import BookResource
 from flask_restful import reqparse, abort, Api, Resource
 import books_resources
 import datetime
@@ -32,13 +33,22 @@ def logout():
     logout_user()
     return redirect("/")
 
-
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     user = db_sess.query(User).get(user_id)
     db_sess.close()
     return user
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify({'error': 'Bad request'}), 400)
 
 
 @app.route('/')
@@ -327,6 +337,11 @@ def profile():
                            cnt_favorites=len(favorites), comments=user.comments, user_image=user_image)
 
 
-if __name__ == '__main__':
+def main():
     db_session.global_init("db/books.db")
+    api.add_resource(BookResource, '/api/book/<book_title>')
     app.run(port=5000, host='127.0.0.1')
+
+
+if __name__ == '__main__':
+    main()
