@@ -11,9 +11,8 @@ from data.genres import Genre
 from data.images import Image
 from forms.search import Search
 from forms.add_comment import CommentForm
-from books_resources import BookResource
 from flask_restful import Api
-import books_resources
+from books_resources import BookResource
 import datetime
 
 app = Flask(__name__)
@@ -22,7 +21,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=365
 )
 api = Api(app)
-api.add_resource(books_resources.BookResource, '/api/book/<string:book_title>')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -32,6 +30,7 @@ login_manager.init_app(app)
 def logout():
     logout_user()
     return redirect("/")
+
 
 @login_manager.user_loader
 def load_user(user_id):
