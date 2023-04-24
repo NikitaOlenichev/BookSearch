@@ -1,7 +1,7 @@
 from flask_restful import abort, Resource
 from flask import jsonify
 from data.books import Book
-from . import db_session
+from data import db_session
 
 
 def abort_if_book_not_found(book_title):

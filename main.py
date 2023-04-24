@@ -2,7 +2,7 @@ from data import db_session
 from flask import Flask, render_template, redirect, request
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
-from flask_login import LoginManager, login_user, logout_user, login_required, current_user, AnonymousUserMixin
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from data.users import User
 from data.books import Book
 from data.authors import Author
@@ -11,8 +11,8 @@ from data.genres import Genre
 from data.images import Image
 from forms.search import Search
 from forms.add_comment import CommentForm
-from data.books_resources import BookResource
-from flask_restful import reqparse, abort, Api, Resource
+from books_resources import BookResource
+from flask_restful import Api
 import books_resources
 import datetime
 
