@@ -58,13 +58,18 @@
                         </a>
                     </td>
                     <td>
-                        <a href="/book_page/{{ book[-1] }}">{{ book[1] }}</a>
+                        <a href="/book_page/{{ book[-1] }}"><div class="book-name">{{ book[1] }}</div></a>
                     </td>
                     {% for item in book[2:-2] %}
                     <td>
                         {{ item }}
                     </td>
                     {% endfor %}
+                    {% if current_user.is_authenticated and current_user.admin %}
+                    <td><a href="/del_book_bd/{{ book[-1] }}">
+                        <button class="btn-del btn btn-danger">Удалить</button></a></td>
+                    {% endif %}
+
                 </tr>
             {% endfor %}
             </tbody>

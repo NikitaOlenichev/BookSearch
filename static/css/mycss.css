@@ -313,6 +313,25 @@ body {
     border-bottom: 2px solid black;
 }
 
+.reg-msg {
+    margin-top: 2rem;
+    color: red;
+    text-align: center;
+}
+
+.carousel {
+    z-index: 0;
+}
+
+.del-com {
+    margin-left: 1rem;
+}
+
+.msg-com {
+    color: red;
+    font-size: 1.5rem;
+}
+
 
 
 

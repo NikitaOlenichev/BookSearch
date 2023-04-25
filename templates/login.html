@@ -23,12 +23,8 @@
                         {{ error }}
                     </div>
                 {% endfor %}
-            <span class="lab">{{ form.remember_me.label }}</span>
-            {{ form.remember_me() }}
-
-
-            <br><br>
             {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+            <div class="reg-msg">{{ message }}</div>
         </form>
     </div>
 </div>

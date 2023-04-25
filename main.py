@@ -26,10 +26,10 @@ login_manager.init_app(app)
 
 
 @app.route('/logout')
-@login_required
 def logout():
-    logout_user()
-    return redirect("/")
+    if current_user.__class__.__name__ != 'AnonymousUserMixin':
+        logout_user()
+    return redirect('/')
 
 
 @login_manager.user_loader
@@ -86,7 +86,7 @@ def login():
         db_sess.close()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect("/")
+            return redirect('/profile')
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -97,15 +97,23 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        if len(form.password.data) < 6:
+            return render_template('register.html', title='Регистрация',
+                                   form=form,
+                                   message="Пароль должен состоять не менее чем из 6 символов!")
         if form.password.data != form.password_again.data:
             return render_template('register.html', title='Регистрация',
                                    form=form,
-                                   message="Пароли не совпадают")
+                                   message="Пароли не совпадают!")
         db_sess = db_session.create_session()
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='Регистрация',
                                    form=form,
-                                   message="Такой пользователь уже есть")
+                                   message="Пользователь с данной почтой уже зарегистрирован!")
+        if db_sess.query(User).filter(User.name == form.name.data).first():
+            return render_template('register.html', title='Регистрация',
+                                   form=form,
+                                   message="Пользователь с данным именем уже зарегистрирован!")
         user = User(
             name=form.name.data,
             email=form.email.data,
@@ -210,19 +218,27 @@ def book_page(book_id):
     if similars:
         similars = similars.split(';')
     comment_form = CommentForm()
+    comments = book.comments
+    if comments:
+        comments = comments.split('#')[1:-1]
+        comments = list(map(lambda x: x.split('&'), comments))
     if comment_form.validate_on_submit():
+        if len({'&', '#'} & set(comment_form.comment_field.data)) != 0:
+            return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info,
+                                   noms=noms, similars=similars, wins=wins, work_year_of_write=work_year_of_write,
+                                   work_year=work_year, form=comment_form, comments=comments, orig_name=orig_name,
+                                   book_id=book_id, user_books=books if books else [],
+                                   favorite_books=favorite_books if favorite_books else [],
+                                   num_of_readers=num_of_readers, favorites=favorites, user_image=user_image,
+                                   message='В комментариях нельзя использовать символы "#" и "&"!')
         if not book.comments:
             book.comments = ''
-        book.comments += f'{current_user.name}&{comment_form.comment_field.data}&' \
+        book.comments += f'#{current_user.name}&{comment_form.comment_field.data}&' \
                          f'{datetime.datetime.now().strftime("%H:%M:%S %m.%d.%Y")}#'
         comment_form.comment_field.data = None
         user.comments += 1
         session.commit()
         return redirect(f'/book_page/{book_id}')
-    comments = book.comments
-    if comments:
-        comments = comments.split('#')[:-1]
-        comments = list(map(lambda x: x.split('&'), comments))
     session.close()
     return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
                            similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year,
@@ -334,6 +350,27 @@ def profile():
                            favorites=favorites, cnt_favorite_shelfs=cnt_favorite_shelfs,
                            cnt_read_shelfs=cnt_read_shelfs, read_books=read_books, cnt_read_books=len(read_books),
                            cnt_favorites=len(favorites), comments=user.comments, user_image=user_image)
+
+
+@app.route('/del_book_bd/<int:book_id>')
+def del_book_bd(book_id):
+    session = db_session.create_session()
+    session.query(Book).filter(Book.id == book_id).delete()
+    session.commit()
+    session.close()
+    return '<script>document.location.href = document.referrer</script>'
+
+
+@app.route('/del_comment/<int:book_id>/<string:comment>')
+def del_comment(book_id, comment):
+    session = db_session.create_session()
+    book = session.query(Book).filter(Book.id == book_id).first()
+    book.comments = book.comments.replace(f'#{comment}#', '')
+    user = session.query(User).filter(User.name == comment.split('&')[0]).first()
+    user.comments -= 1
+    session.commit()
+    session.close()
+    return '<script>document.location.href = document.referrer</script>'
 
 
 def main():

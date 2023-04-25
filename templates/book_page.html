@@ -10,7 +10,6 @@
 {% endblock %}
 
 
-
 {% block content %}
 <div class="page" align="center">
     <div class="book-page-title">{{ title }}<br>({{ orig_name }})</div>
@@ -112,43 +111,47 @@
                 {% endif %}
             </div>
         </div>
-
     </div>
     <div class="card border-success mb-3 comments-block">
         <div class="card-header">Комментарии пользователей</div>
         <div class="card-body">
             {% if current_user.is_authenticated %}
-            <form method="post">
-                {{ form.hidden_tag() }}
+                <form method="post">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.comment_field(class="form-control comment-field", id="exampleTextarea", rows="3") }}
+                        {{ form.submit(type="submit", class="btn btn-primary comment-btn btn-lg") }}
+                    </div>
+                    <div class="msg-com">{{ message }}</div>
+                </form>
+                {% else %}
+                <span style="font-size: 1.5rem">Для добавления комментариев необходимо авторизоваться</span><br><br>
+                {% endif %}
                 <div>
                     {% if comments %}
                         {% for comment in comments %}
                             <div class="toast show">
                               <div class="toast-header">
-                                <strong class="me-auto">{{ comment[0] }}</strong>
+                                <strong class="me-auto">
+                                    {{ comment[0] }}
+                                      {% if current_user.is_authenticated and current_user.admin %}
+                                        <a class="del-com" href="/del_comment/{{ book_id }}/{{comment[0]}}&{{comment[1]}}&{{comment[2]}}">
+                                        <button class="btn-del btn btn-danger">Удалить комментарий</button></a>
+                                {% endif %}
+                                </strong>
                                   <span class="date-comment">{{ comment[2] }}</span>
-                                <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close">
-                                  <span aria-hidden="true"></span>
-                                </button>
                               </div>
                               <div class="toast-body">
                                 {{ comment[1] }}
                               </div>
+
                             </div>
                         {% endfor %}
+                    {% else %}
+                    <span style="font-size: 1.5rem">Комментариев пока нет :(</span>
                     {% endif %}
                 </div>
-                <div>
-                    {{ form.comment_field(class="form-control comment-field", id="exampleTextarea", rows="3") }}
-                    {{ form.submit(type="submit", class="btn btn-primary comment-btn btn-lg") }}
-                </div>
-            </form>
-            {% else %}
-            Для добавления коммениариев необходимо авторизоваться
-            {% endif %}
         </div>
     </div>
 </div>
-
-
 {% endblock %}
