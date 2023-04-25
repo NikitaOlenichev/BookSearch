@@ -25,15 +25,15 @@ async def start(update, context):
         greet = hi["hey"][3]
     await update.message.reply_text(f'{greet}!!! Я - бот от КнигаПоиска!\n'
                                     'Вот, что я умею:\n'
-                                    '/start - для начала работы,\n'
-                                    '/search - расскажу вам основную информацию о книге,\n'
-                                    '/info - расскажу вам аннотацию по книге,\n'
+                                    '/start - для начала работы\n'
+                                    '/search - расскажу вам основную информацию о книге\n'
+                                    '/info - расскажу вам аннотацию по книге\n'
                                     '/genre - пришлю ссылку на страницу сайта с книгами\n'
-                                    'нужного вам жанра,\n'
+                                    'нужного вам жанра\n'
                                     '/author - пришлю ссылку на страницу сайта с нигами\n'
-                                    'нужного вам автора,\n'
-                                    '/read - покажу где можно почитать книгу,\n'
-                                    '/help - поддержка,\n'
+                                    'нужного вам автора\n'
+                                    '/read - покажу где можно почитать книгу\n'
+                                    '/help - поддержка\n'
                                     'Пример: /команда название книги или жанр или автор.\n'
                                     'Что хотите узнать?')
 
@@ -45,46 +45,66 @@ async def help_command(update, context):
 
 
 async def search(update, context):
-    response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
-    if response.status_code == 200:
-        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
-        await update.message.reply_text(f"Название: {response['book']['title']}\n"
-                                        f"Оригинальное название: {response['book']['orig_name']}\n"
-                                        f"Автор: {response['book']['author']['name']}\n"
-                                        f"Жанр: {response['book']['genre']['title']}\n"
-                                        f"Год публикации: {response['book']['work_year']}\n"
-                                        f"Ссылка на страницу сайта: ...\n"
-                                        f"Ссылка на фото: {response['book']['image']['link']}")
+    if context.args != []:
+        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
+        if response.status_code == 200:
+            response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
+            await update.message.reply_text(f"Название: {response['book']['title']}\n"
+                                            f"Оригинальное название: {response['book']['orig_name']}\n"
+                                            f"Автор: {response['book']['author']['name']}\n"
+                                            f"Жанр: {response['book']['genre']['title']}\n"
+                                            f"Год публикации: {response['book']['work_year']}\n"
+                                            f"Ссылка на страницу сайта: ...\n"
+                                            f"Ссылка на фото: {response['book']['image']['link']}")
+        else:
+            await update.message.reply_text('К сожалению, я не знаю такую книгу!')
     else:
-        await update.message.reply_text('К сожалению, я не знаю такую книгу!')
+        await update.message.reply_text('Введите команду вот в таком виде:\n'
+                                        '/search Название книги')
 
 
 async def search_info(update, context):
-    response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
-    if response.status_code == 200:
-        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
-        await update.message.reply_text(f"{response['book']['info']['info']}\n"
-                                        f"Ссылка на страницу сайта: ...")
+    if context.args != []:
+        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
+        if response.status_code == 200:
+            response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
+            await update.message.reply_text(f"{response['book']['info']['info']}\n"
+                                            f"Ссылка на страницу сайта: ...")
+        else:
+            await update.message.reply_text('К сожалению, я не знаю такую книгу!')
     else:
-        await update.message.reply_text('К сожалению, я не знаю такую книгу!')
+        await update.message.reply_text('Введите команду вот в таком виде:\n'
+                                        '/info Название книги')
 
 
 async def genres_book(update, context):
-    await update.message.reply_text(f"Все книги в жанре {context.args[0]}\n"
-                                    f"вы можете увидеть на нашем сайте!\n"
-                                    f"Ссылка на страницу сайта: ...")
+    if context.args != []:
+        await update.message.reply_text(f"Все книги в жанре {context.args[0]}\n"
+                                        f"вы можете увидеть на нашем сайте!\n"
+                                        f"Ссылка на страницу сайта: ...")
+    else:
+        await update.message.reply_text('Введите команду вот в таком виде:\n'
+                                        '/genre название жанра')
 
 
 async def authors_book(update, context):
-    await update.message.reply_text(f"Все книги автора {context.args[0]}\n"
-                                    f"вы можете увидеть на нашем сайте!\n"
-                                    f"Ссылка на страницу сайта: ...")
+    if context.args != []:
+        await update.message.reply_text(f"Все книги автора {context.args[0]}\n"
+                                        f"вы можете увидеть на нашем сайте!\n"
+                                        f"Ссылка на страницу сайта: ...")
+    else:
+        await update.message.reply_text('Введите команду вот в таком виде:\n'
+                                        '/author имя автора')
 
 
 async def read_book(update, context):
-    await update.message.reply_text(f"Книгу {context.args[0]} вы можете проситать\n"
-                                    f"по ссылке: "
-                                    f"https://yandex.ru/search/?text={context.args[0]}+читать")
+    if context.args != []:
+        await update.message.reply_text(f"Книгу {context.args[0]} вы можете прочитать\n"
+                                        f"по ссылке: "
+                                        f"https://yandex.ru/search/?text={context.args[0]}+читать")
+    else:
+        await update.message.reply_text('Введите команду вот в таком виде:\n'
+                                        '/read Название книги')
 
 
 def main():
