@@ -48,13 +48,15 @@ async def search(update, context):
     if context.args != []:
         response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
         if response.status_code == 200:
+            res = f"https://diamond-complex-gondola.glitch.me/search/1?title={context.args[0]}"
             response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"Название: {response['book']['title']}\n"
-                                            f"Оригинальное название: {response['book']['orig_name']}\n"
+                                            f"Оригинальное название: "
+                                            f"{response['book']['orig_name']}\n"
                                             f"Автор: {response['book']['author']['name']}\n"
                                             f"Жанр: {response['book']['genre']['title']}\n"
                                             f"Год публикации: {response['book']['work_year']}\n"
-                                            f"Ссылка на страницу сайта: ...\n"
+                                            f"Ссылка на страницу сайта: {res}\n"
                                             f"Ссылка на фото: {response['book']['image']['link']}")
         else:
             await update.message.reply_text('К сожалению, я не знаю такую книгу!')
@@ -67,9 +69,10 @@ async def search_info(update, context):
     if context.args != []:
         response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
         if response.status_code == 200:
+            res = f"https://diamond-complex-gondola.glitch.me/search/1?title={context.args[0]}"
             response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"{response['book']['info']['info']}\n"
-                                            f"Ссылка на страницу сайта: ...")
+                                            f"Ссылка на страницу сайта: {res}")
         else:
             await update.message.reply_text('К сожалению, я не знаю такую книгу!')
     else:
@@ -79,22 +82,24 @@ async def search_info(update, context):
 
 async def genres_book(update, context):
     if context.args != []:
+        res = f"https://diamond-complex-gondola.glitch.me/search/1?genre={context.args[0]}"
         await update.message.reply_text(f"Все книги в жанре {context.args[0]}\n"
                                         f"вы можете увидеть на нашем сайте!\n"
-                                        f"Ссылка на страницу сайта: ...")
+                                        f"Ссылка на страницу сайта: {res}")
     else:
         await update.message.reply_text('Введите команду вот в таком виде:\n'
-                                        '/genre название жанра')
+                                        '/genre Название жанра')
 
 
 async def authors_book(update, context):
     if context.args != []:
+        res = f"https://diamond-complex-gondola.glitch.me/search/1?author={context.args[0]}"
         await update.message.reply_text(f"Все книги автора {context.args[0]}\n"
                                         f"вы можете увидеть на нашем сайте!\n"
-                                        f"Ссылка на страницу сайта: ...")
+                                        f"Ссылка на страницу сайта: {res}")
     else:
         await update.message.reply_text('Введите команду вот в таком виде:\n'
-                                        '/author имя автора')
+                                        '/author Автор')
 
 
 async def read_book(update, context):
