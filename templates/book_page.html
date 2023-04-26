@@ -12,7 +12,11 @@
 
 {% block content %}
 <div class="page" align="center">
-    <div class="book-page-title">{{ title }}<br>({{ orig_name }})</div>
+    <div class="book-page-title">{{ title }}<br>
+        {% if orig_name %}
+        ({{ orig_name }})
+        {% endif %}
+    </div>
     <div class="image-status">
         {% if image != '-' %}
         <img src="{{ image }}" class="book-page-image">
@@ -44,7 +48,9 @@
         <div class="author-desc">
             <div class="book-page-author-genre">
                 <p>Название: {{ title }}</p>
+                {% if orig_name %}
                 <p>Оригинальное название: {{ orig_name }}</p>
+                {% endif %}
                 {% if author and author != '-' %}
                 <p>Автор: {{ author }}</p>
                 {% endif %}

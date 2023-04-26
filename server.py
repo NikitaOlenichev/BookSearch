@@ -144,13 +144,13 @@ def search(page):
     genre_fltr = request.args.get('genre')
     title_fltr = request.args.get('title')
     if title_fltr:
-        sp = sp.filter(Book.title.like(f'%{title_fltr}%'))
+        sp = sp.filter(Book.title.ilike(f'%{title_fltr}%'))
         form.title.data = title_fltr
     if genre_fltr:
-        sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title.like(f'%{genre_fltr}%')).first())
+        sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title.ilike(f'%{genre_fltr}%')).first())
         form.genre.data = genre_fltr
     if author_fltr:
-        sp = sp.filter(Book.author == db_sess.query(Author).filter(Author.name.like(f'%{author_fltr}%')).first())
+        sp = sp.filter(Book.author == db_sess.query(Author).filter(Author.name.ilike(f'%{author_fltr}%')).first())
         form.author.data = author_fltr
     sp = sp.all()
     sp.sort(key=lambda x: x.title)
