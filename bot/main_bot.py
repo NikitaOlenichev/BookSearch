@@ -48,7 +48,7 @@ async def search(update, context):
     if context.args != []:
         response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
         if response.status_code == 200:
-            res = f"https://diamond-complex-gondola.glitch.me/search/1?title={context.args[0]}"
+            res = f"https://prickly-curse-lingonberry.glitch.me/search/1?title={context.args[0]}"
             response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"Название: {response['book']['title']}\n"
                                             f"Оригинальное название: "
@@ -69,7 +69,7 @@ async def search_info(update, context):
     if context.args != []:
         response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
         if response.status_code == 200:
-            res = f"https://diamond-complex-gondola.glitch.me/search/1?title={context.args[0]}"
+            res = f"https://prickly-curse-lingonberry.glitch.me/search/1?title={context.args[0]}"
             response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"{response['book']['info']['info']}\n"
                                             f"Ссылка на страницу сайта: {res}")
@@ -82,7 +82,7 @@ async def search_info(update, context):
 
 async def genres_book(update, context):
     if context.args != []:
-        res = f"https://diamond-complex-gondola.glitch.me/search/1?genre={context.args[0]}"
+        res = f"https://prickly-curse-lingonberry.glitch.me/search/1?genre={context.args[0]}"
         await update.message.reply_text(f"Все книги в жанре {context.args[0]}\n"
                                         f"вы можете увидеть на нашем сайте!\n"
                                         f"Ссылка на страницу сайта: {res}")
@@ -93,7 +93,7 @@ async def genres_book(update, context):
 
 async def authors_book(update, context):
     if context.args != []:
-        res = f"https://diamond-complex-gondola.glitch.me/search/1?author={context.args[0]}"
+        res = f"https://prickly-curse-lingonberry.glitch.me/search/1?author={context.args[0]}"
         await update.message.reply_text(f"Все книги автора {context.args[0]}\n"
                                         f"вы можете увидеть на нашем сайте!\n"
                                         f"Ссылка на страницу сайта: {res}")
