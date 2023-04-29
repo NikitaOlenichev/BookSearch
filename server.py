@@ -73,7 +73,8 @@ def index():
     for user in top_comments_list:
         top_comments.append([user.name, user.comments])
     session.close()
-    return render_template('index.html', user_image=user_image, top_read=top_read, top_favorites=top_favorites,
+    return render_template('index.html', user_image=user_image, top_read=top_read,
+                           top_favorites=top_favorites,
                            top_comments=top_comments)
 
 
@@ -147,10 +148,12 @@ def search(page):
         sp = sp.filter(Book.title.ilike(f'%{title_fltr}%'))
         form.title.data = title_fltr
     if genre_fltr:
-        sp = sp.filter(Book.genre == db_sess.query(Genre).filter(Genre.title.ilike(f'%{genre_fltr}%')).first())
+        sp = sp.filter(
+            Book.genre == db_sess.query(Genre).filter(Genre.title.ilike(f'%{genre_fltr}%')).first())
         form.genre.data = genre_fltr
     if author_fltr:
-        sp = sp.filter(Book.author == db_sess.query(Author).filter(Author.name.ilike(f'%{author_fltr}%')).first())
+        sp = sp.filter(Book.author == db_sess.query(Author).filter(
+            Author.name.ilike(f'%{author_fltr}%')).first())
         form.author.data = author_fltr
     sp = sp.all()
     sp.sort(key=lambda x: x.title)
@@ -173,9 +176,12 @@ def search(page):
         pg_l = min(9, ln)
     if page > ln - 4:
         pg_f = max(1, ln - 8)
-    return render_template('search.html', title='Поиск', form=form, sp=sp2, page=page, link=f'/search/', ln=ln, msg='',
-                           author_fltr=author_fltr if author_fltr else '', genre_fltr=genre_fltr if genre_fltr else '',
-                           ttl_fltr=title_fltr if title_fltr else '', pg_l=pg_l, pg_f=pg_f, user_image=user_image)
+    return render_template('search.html', title='Поиск', form=form, sp=sp2, page=page,
+                           link=f'/search/', ln=ln, msg='',
+                           author_fltr=author_fltr if author_fltr else '',
+                           genre_fltr=genre_fltr if genre_fltr else '',
+                           ttl_fltr=title_fltr if title_fltr else '', pg_l=pg_l, pg_f=pg_f,
+                           user_image=user_image)
 
 
 @app.route('/book_page/<int:book_id>', methods=['GET', 'POST'])
@@ -224,12 +230,16 @@ def book_page(book_id):
         comments = list(map(lambda x: x.split('&'), comments))
     if comment_form.validate_on_submit():
         if len({'&', '#'} & set(comment_form.comment_field.data)) != 0:
-            return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info,
-                                   noms=noms, similars=similars, wins=wins, work_year_of_write=work_year_of_write,
-                                   work_year=work_year, form=comment_form, comments=comments, orig_name=orig_name,
+            return render_template('book_page.html', image=image, title=title, author=author,
+                                   genre=genre, info=info,
+                                   noms=noms, similars=similars, wins=wins,
+                                   work_year_of_write=work_year_of_write,
+                                   work_year=work_year, form=comment_form, comments=comments,
+                                   orig_name=orig_name,
                                    book_id=book_id, user_books=books if books else [],
                                    favorite_books=favorite_books if favorite_books else [],
-                                   num_of_readers=num_of_readers, favorites=favorites, user_image=user_image,
+                                   num_of_readers=num_of_readers, favorites=favorites,
+                                   user_image=user_image,
                                    message='В комментариях нельзя использовать символы "#" и "&"!')
         if not book.comments:
             book.comments = ''
@@ -240,11 +250,16 @@ def book_page(book_id):
         session.commit()
         return redirect(f'/book_page/{book_id}')
     session.close()
-    return render_template('book_page.html', image=image, title=title, author=author, genre=genre, info=info, noms=noms,
-                           similars=similars, wins=wins, work_year_of_write=work_year_of_write, work_year=work_year,
-                           form=comment_form, comments=comments, orig_name=orig_name, book_id=book_id,
-                           user_books=books if books else [], favorite_books=favorite_books if favorite_books else [],
-                           num_of_readers=num_of_readers, favorites=favorites, user_image=user_image)
+    return render_template('book_page.html', image=image, title=title, author=author, genre=genre,
+                           info=info, noms=noms,
+                           similars=similars, wins=wins, work_year_of_write=work_year_of_write,
+                           work_year=work_year,
+                           form=comment_form, comments=comments, orig_name=orig_name,
+                           book_id=book_id,
+                           user_books=books if books else [],
+                           favorite_books=favorite_books if favorite_books else [],
+                           num_of_readers=num_of_readers, favorites=favorites,
+                           user_image=user_image)
 
 
 @app.route('/add_book/<int:book_id>')
@@ -333,7 +348,8 @@ def profile():
         session.close()
         return redirect('/profile')
     user_id = user.id
-    favorites_list = list(map(int, user.favorite_books.split(';')[:-1])) if user.favorite_books else ''
+    favorites_list = list(
+        map(int, user.favorite_books.split(';')[:-1])) if user.favorite_books else ''
     read_books_list = list(map(int, user.books.split(';')[:-1])) if user.books else ''
     favorites = []
     read_books = []
@@ -346,10 +362,13 @@ def profile():
     cnt_favorite_shelfs = (len(favorites) - 1) // 5 + 1
     cnt_read_shelfs = (len(read_books) - 1) // 5 + 1
     session.close()
-    return render_template('profile.html', name=current_user.name, image=user.image, user_id=user_id,
+    return render_template('profile.html', name=current_user.name, image=user.image,
+                           user_id=user_id,
                            favorites=favorites, cnt_favorite_shelfs=cnt_favorite_shelfs,
-                           cnt_read_shelfs=cnt_read_shelfs, read_books=read_books, cnt_read_books=len(read_books),
-                           cnt_favorites=len(favorites), comments=user.comments, user_image=user_image)
+                           cnt_read_shelfs=cnt_read_shelfs, read_books=read_books,
+                           cnt_read_books=len(read_books),
+                           cnt_favorites=len(favorites), comments=user.comments,
+                           user_image=user_image)
 
 
 @app.route('/del_book_bd/<int:book_id>')

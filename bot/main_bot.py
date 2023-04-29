@@ -46,10 +46,10 @@ async def help_command(update, context):
 
 async def search(update, context):
     if context.args != []:
-        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
+        response = get(f'https://prickly-curse-lingonberry.glitch.me/api/book/{context.args[0]}')
         if response.status_code == 200:
             res = f"https://prickly-curse-lingonberry.glitch.me/search/1?title={context.args[0]}"
-            response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
+            response = get(f'https://prickly-curse-lingonberry.glitch.me/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"Название: {response['book']['title']}\n"
                                             f"Оригинальное название: "
                                             f"{response['book']['orig_name']}\n"
@@ -67,10 +67,10 @@ async def search(update, context):
 
 async def search_info(update, context):
     if context.args != []:
-        response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}')
+        response = get(f'https://prickly-curse-lingonberry.glitch.me/api/book/{context.args[0]}')
         if response.status_code == 200:
             res = f"https://prickly-curse-lingonberry.glitch.me/search/1?title={context.args[0]}"
-            response = get(f'http://127.0.0.1:5000/api/book/{context.args[0]}').json()
+            response = get(f'https://prickly-curse-lingonberry.glitch.me/api/book/{context.args[0]}').json()
             await update.message.reply_text(f"{response['book']['info']['info']}\n"
                                             f"Ссылка на страницу сайта: {res}")
         else:
